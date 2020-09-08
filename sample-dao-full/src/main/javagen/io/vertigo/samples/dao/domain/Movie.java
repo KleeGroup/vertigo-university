@@ -1,12 +1,12 @@
 package io.vertigo.samples.dao.domain;
 
-import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.ListVAccessor;
-import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datastore.impl.entitystore.StoreListVAccessor;
+import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -21,7 +21,7 @@ public final class Movie implements Entity {
 	private Integer year;
 	private String imdbid;
 
-	@io.vertigo.dynamo.domain.stereotype.Association(
+	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "AMovCou",
 			fkFieldName = "couId",
 			primaryDtDefinitionName = "DtCountry",
@@ -34,9 +34,9 @@ public final class Movie implements Entity {
 			foreignRole = "Movie",
 			foreignLabel = "Movie",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.vertigo.samples.dao.domain.Country> couIdAccessor = new VAccessor<>(io.vertigo.samples.dao.domain.Country.class, "Country");
+	private final StoreVAccessor<io.vertigo.samples.dao.domain.Country> couIdAccessor = new StoreVAccessor<>(io.vertigo.samples.dao.domain.Country.class, "Country");
 
-	@io.vertigo.dynamo.domain.stereotype.Association(
+	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "ARolMov",
 			fkFieldName = "movId",
 			primaryDtDefinitionName = "DtMovie",
@@ -49,7 +49,7 @@ public final class Movie implements Entity {
 			foreignRole = "Role",
 			foreignLabel = "Role",
 			foreignMultiplicity = "0..*")
-	private final ListVAccessor<io.vertigo.samples.dao.domain.Role> roleAccessor = new ListVAccessor<>(this, "ARolMov", "Role");
+	private final StoreListVAccessor<io.vertigo.samples.dao.domain.Role> roleAccessor = new StoreListVAccessor<>(this, "ARolMov", "Role");
 
 	/** {@inheritDoc} */
 	@Override
@@ -62,7 +62,7 @@ public final class Movie implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long movId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(smartType = "STyId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getMovId() {
 		return movId;
 	}
@@ -81,7 +81,7 @@ public final class Movie implements Entity {
 	 * Récupère la valeur de la propriété 'Code du pays'.
 	 * @return String name <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoLabelLong", required = true, label = "Code du pays")
+	@Field(smartType = "STyLabelLong", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Code du pays")
 	public String getName() {
 		return name;
 	}
@@ -100,7 +100,7 @@ public final class Movie implements Entity {
 	 * Récupère la valeur de la propriété 'Année'.
 	 * @return Integer year
 	 */
-	@Field(domain = "DoYear", label = "Année")
+	@Field(smartType = "STyYear", label = "Année")
 	public Integer getYear() {
 		return year;
 	}
@@ -119,7 +119,7 @@ public final class Movie implements Entity {
 	 * Récupère la valeur de la propriété 'Id Imdb'.
 	 * @return String imdbid
 	 */
-	@Field(domain = "DoLabel", label = "Id Imdb")
+	@Field(smartType = "STyLabel", label = "Id Imdb")
 	public String getImdbid() {
 		return imdbid;
 	}
@@ -138,7 +138,7 @@ public final class Movie implements Entity {
 	 * Récupère la valeur de la propriété 'Country'.
 	 * @return Long couId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Country")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Country", fkDefinition = "DtCountry" )
 	public Long getCouId() {
 		return (Long) couIdAccessor.getId();
 	}
@@ -156,7 +156,7 @@ public final class Movie implements Entity {
 	 * Association : Country.
 	 * @return l'accesseur vers la propriété 'Country'
 	 */
-	public VAccessor<io.vertigo.samples.dao.domain.Country> country() {
+	public StoreVAccessor<io.vertigo.samples.dao.domain.Country> country() {
 		return couIdAccessor;
 	}
 
@@ -164,7 +164,7 @@ public final class Movie implements Entity {
 	 * Association : Role.
 	 * @return l'accesseur vers la propriété 'Role'
 	 */
-	public ListVAccessor<io.vertigo.samples.dao.domain.Role> role() {
+	public StoreListVAccessor<io.vertigo.samples.dao.domain.Role> role() {
 		return roleAccessor;
 	}
 	

@@ -2,14 +2,14 @@ package io.vertigo.samples;
 
 import javax.inject.Inject;
 
-import io.vertigo.app.Home;
-import io.vertigo.dynamo.task.TaskManager;
-import io.vertigo.dynamo.task.metamodel.TaskDefinition;
-import io.vertigo.dynamo.task.model.Task;
-import io.vertigo.dynamo.task.model.TaskBuilder;
-import io.vertigo.dynamo.store.StoreServices;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.node.Node;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.task.TaskManager;
+import io.vertigo.datamodel.task.definitions.TaskDefinition;
+import io.vertigo.datamodel.task.model.Task;
+import io.vertigo.datamodel.task.model.TaskBuilder;
+import io.vertigo.datastore.impl.dao.StoreServices;
 
 /**
  * This class is automatically generated.
@@ -25,7 +25,7 @@ public final class SamplesPAO implements StoreServices {
 	 */
 	@Inject
 	public SamplesPAO(final TaskManager taskManager) {
-		Assertion.checkNotNull(taskManager);
+		Assertion.check().isNotNull(taskManager);
 		//-----
 		this.taskManager = taskManager;
 	}
@@ -36,7 +36,7 @@ public final class SamplesPAO implements StoreServices {
 	 * @return the builder 
 	 */
 	private static TaskBuilder createTaskBuilder(final String name) {
-		final TaskDefinition taskDefinition = Home.getApp().getDefinitionSpace().resolve(name, TaskDefinition.class);
+		final TaskDefinition taskDefinition = Node.getNode().getDefinitionSpace().resolve(name, TaskDefinition.class);
 		return Task.builder(taskDefinition);
 	}
 
@@ -44,7 +44,12 @@ public final class SamplesPAO implements StoreServices {
 	 * Execute la tache TkGetMovieByYear.
 	 * @return DtList de MovieByYear movies
 	*/
-	public io.vertigo.dynamo.domain.model.DtList<io.vertigo.samples.dao.domain.MovieByYear> getMovieByYear() {
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkGetMovieByYear",
+			request = "select YEAR, count(*) as MOVIES_COUNT from movie where YEAR is not null group by year order by YEAR asc",
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtMovieByYear")
+	public io.vertigo.datamodel.structure.model.DtList<io.vertigo.samples.dao.domain.MovieByYear> getMovieByYear() {
 		final Task task = createTaskBuilder("TkGetMovieByYear")
 				.build();
 		return getTaskManager()
@@ -56,7 +61,17 @@ public final class SamplesPAO implements StoreServices {
 	 * Execute la tache TkGetMovieDisplay.
 	 * @return DtList de MovieDisplay movies
 	*/
-	public io.vertigo.dynamo.domain.model.DtList<io.vertigo.samples.dao.domain.MovieDisplay> getMovieDisplay() {
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkGetMovieDisplay",
+			request = "select mov.NAME,mov.YEAR, cou.NAME as COUNTRY, hv.CNT as ACTORS_COUNT" + 
+ "		from movie mov" + 
+ "		join country cou on cou.COU_ID = mov.COU_ID" + 
+ "		join (select MOV_ID, count(*) cnt from role group by mov_id ) hv on hv.MOV_ID = mov.MOV_ID" + 
+ "		where mov.YEAR > 2010" + 
+ "		limit 500",
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtMovieDisplay")
+	public io.vertigo.datamodel.structure.model.DtList<io.vertigo.samples.dao.domain.MovieDisplay> getMovieDisplay() {
 		final Task task = createTaskBuilder("TkGetMovieDisplay")
 				.build();
 		return getTaskManager()

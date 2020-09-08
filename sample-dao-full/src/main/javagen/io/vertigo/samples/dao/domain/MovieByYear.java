@@ -1,9 +1,9 @@
 package io.vertigo.samples.dao.domain;
 
-import io.vertigo.dynamo.domain.model.DtObject;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.DtObject;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -21,7 +21,7 @@ public final class MovieByYear implements DtObject {
 	 * Récupère la valeur de la propriété 'Année'.
 	 * @return Integer year
 	 */
-	@Field(domain = "DoYear", label = "Année")
+	@Field(smartType = "STyYear", label = "Année")
 	public Integer getYear() {
 		return year;
 	}
@@ -40,7 +40,7 @@ public final class MovieByYear implements DtObject {
 	 * Récupère la valeur de la propriété 'Nombre de film'.
 	 * @return Long moviesCount
 	 */
-	@Field(domain = "DoId", label = "Nombre de film")
+	@Field(smartType = "STyId", label = "Nombre de film")
 	public Long getMoviesCount() {
 		return moviesCount;
 	}

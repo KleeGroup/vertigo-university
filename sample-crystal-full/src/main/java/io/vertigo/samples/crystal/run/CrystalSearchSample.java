@@ -1,19 +1,20 @@
 package io.vertigo.samples.crystal.run;
 
-import io.vertigo.app.AutoCloseableApp;
-import io.vertigo.app.config.ModuleConfig;
-import io.vertigo.app.config.NodeConfigBuilder;
+import io.vertigo.core.node.AutoCloseableNode;
+import io.vertigo.core.node.config.ModuleConfig;
+import io.vertigo.core.node.config.NodeConfigBuilder;
+import io.vertigo.core.util.InjectorUtil;
 import io.vertigo.samples.SamplesPAO;
 import io.vertigo.samples.crystal.CrystalPAO;
 import io.vertigo.samples.crystal.config.SampleConfigBuilder;
 import io.vertigo.samples.crystal.dao.ActorDAO;
 import io.vertigo.samples.crystal.dao.MovieDAO;
 import io.vertigo.samples.crystal.dao.RoleDAO;
+import io.vertigo.samples.crystal.search.MovieSearchClient;
 import io.vertigo.samples.crystal.services.MovieSearchLoader;
 import io.vertigo.samples.crystal.services.MovieServices;
 import io.vertigo.samples.crystal.services.MovieServicesImpl;
 import io.vertigo.samples.crystal.webservices.MovieWebServices;
-import io.vertigo.util.InjectorUtil;
 
 public class CrystalSearchSample {
 
@@ -27,7 +28,7 @@ public class CrystalSearchSample {
 						.build())
 				.addModule(defaultSampleModule());
 
-		try (final AutoCloseableApp app = new AutoCloseableApp(nodeConfigBuilder.build())) {
+		try (final AutoCloseableNode node = new AutoCloseableNode(nodeConfigBuilder.build())) {
 			final CrystalSearchSample sample = new CrystalSearchSample();
 			InjectorUtil.injectMembers(sample);
 			//-----
@@ -39,6 +40,7 @@ public class CrystalSearchSample {
 		return ModuleConfig.builder("Sample")
 				.addComponent(MovieDAO.class)
 				.addComponent(CrystalPAO.class)
+				.addComponent(MovieSearchClient.class)
 				.addComponent(MovieServices.class, MovieServicesImpl.class)
 				.addComponent(MovieSearchLoader.class)
 				.addComponent(MovieWebServices.class)

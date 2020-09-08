@@ -1,9 +1,9 @@
 package io.vertigo.samples.crystal.domain;
 
-import io.vertigo.dynamo.domain.model.DtObject;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.DtObject;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -23,7 +23,7 @@ public final class MovieIndex implements DtObject {
 	 * Récupère la valeur de la propriété 'id'.
 	 * @return Long movId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", required = true, label = "id")
+	@Field(smartType = "STyId", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "id")
 	public Long getMovId() {
 		return movId;
 	}
@@ -42,7 +42,7 @@ public final class MovieIndex implements DtObject {
 	 * Récupère la valeur de la propriété 'Titre'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabelLong", label = "Titre")
+	@Field(smartType = "STyLabelLong", label = "Titre")
 	public String getName() {
 		return name;
 	}
@@ -61,7 +61,7 @@ public final class MovieIndex implements DtObject {
 	 * Récupère la valeur de la propriété 'Année'.
 	 * @return Integer year
 	 */
-	@Field(domain = "DoYear", label = "Année")
+	@Field(smartType = "STyYear", label = "Année")
 	public Integer getYear() {
 		return year;
 	}
@@ -80,7 +80,7 @@ public final class MovieIndex implements DtObject {
 	 * Récupère la valeur de la propriété 'Pays'.
 	 * @return String country
 	 */
-	@Field(domain = "DoLabel", label = "Pays")
+	@Field(smartType = "STyLabel", label = "Pays")
 	public String getCountry() {
 		return country;
 	}
@@ -97,9 +97,9 @@ public final class MovieIndex implements DtObject {
 	/**
 	 * Champ : COMPUTED.
 	 * Récupère la valeur de la propriété calculée 'Titre'.
-	 * @return String nameSortOnly
+	 * @return String nameSortOnly <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoLabelLongSort", type = "COMPUTED", persistent = false, label = "Titre")
+	@Field(smartType = "STyLabelLongSort", type = "COMPUTED", cardinality = io.vertigo.core.lang.Cardinality.ONE, persistent = false, label = "Titre")
 	public String getNameSortOnly() {
 		return getName();
 	}

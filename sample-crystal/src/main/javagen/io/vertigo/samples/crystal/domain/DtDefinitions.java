@@ -3,8 +3,8 @@ package io.vertigo.samples.crystal.domain;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import io.vertigo.dynamo.domain.metamodel.DtFieldName;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.definitions.DtFieldName;
 
 /**
  * This class is automatically generated.
@@ -150,7 +150,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	/** {@inheritDoc} */
 	@Override
 	public Iterator<Class<?>> iterator() {
-		return new Iterator<Class<?>>() {
+		return new Iterator<>() {
 			private Iterator<Definitions> it = Arrays.asList(Definitions.values()).iterator();
 
 			/** {@inheritDoc} */

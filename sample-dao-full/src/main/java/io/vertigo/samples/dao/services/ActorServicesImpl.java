@@ -3,7 +3,7 @@ package io.vertigo.samples.dao.services;
 import javax.inject.Inject;
 
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.lang.Assertion;
 import io.vertigo.samples.dao.aspect.Supervision;
 import io.vertigo.samples.dao.dao.ActorDAO;
 import io.vertigo.samples.dao.domain.Actor;
@@ -17,7 +17,7 @@ public class ActorServicesImpl implements ActorServices {
 
 	@Override
 	public void saveActor(final Actor actor) {
-		Assertion.checkNotNull(actor);
+		Assertion.check().isNotNull(actor);
 		// ---
 		actorDAO.save(actor);
 
@@ -25,14 +25,14 @@ public class ActorServicesImpl implements ActorServices {
 
 	@Override
 	public Actor getActorById(final Long actId) {
-		Assertion.checkNotNull(actId);
+		Assertion.check().isNotNull(actId);
 		//---
 		return actorDAO.get(actId);
 	}
 
 	@Override
 	public void deleteMyActor(final Long actId) {
-		Assertion.checkNotNull(actId);
+		Assertion.check().isNotNull(actId);
 		//---
 		actorDAO.delete(actId);
 	}

@@ -2,9 +2,9 @@ package io.vertigo.samples.aspects;
 
 import javax.inject.Inject;
 
-import io.vertigo.core.component.aop.Aspect;
-import io.vertigo.core.component.aop.AspectMethodInvocation;
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.component.aop.Aspect;
+import io.vertigo.core.node.component.aop.AspectMethodInvocation;
 
 /**
  * @author pchretien
@@ -14,7 +14,7 @@ public final class SpyAspect implements Aspect {
 
 	@Inject
 	public SpyAspect(final SpyManager spyManager) {
-		Assertion.checkNotNull(spyManager);
+		Assertion.check().isNotNull(spyManager);
 		//-----
 		this.spyManager = spyManager;
 	}

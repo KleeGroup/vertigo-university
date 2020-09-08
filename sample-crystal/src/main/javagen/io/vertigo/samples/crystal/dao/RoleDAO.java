@@ -2,12 +2,13 @@ package io.vertigo.samples.crystal.dao;
 
 import javax.inject.Inject;
 
-import io.vertigo.dynamo.impl.store.util.DAO;
-import io.vertigo.dynamo.store.StoreManager;
-import io.vertigo.dynamo.store.StoreServices;
-import io.vertigo.dynamo.task.TaskManager;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
+import io.vertigo.datastore.impl.dao.DAO;
+import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.datamodel.smarttype.SmartTypeManager;
+import io.vertigo.datamodel.task.TaskManager;
 import io.vertigo.samples.crystal.domain.Role;
-import io.vertigo.lang.Generated;
 
 /**
  * This class is automatically generated.
@@ -18,12 +19,13 @@ public final class RoleDAO extends DAO<Role, java.lang.Long> implements StoreSer
 
 	/**
 	 * Contructeur.
-	 * @param storeManager Manager de persistance
+	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
+	 * @param smartTypeManager SmartTypeManager
 	 */
 	@Inject
-	public RoleDAO(final StoreManager storeManager, final TaskManager taskManager) {
-		super(Role.class, storeManager, taskManager);
+	public RoleDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final SmartTypeManager smartTypeManager) {
+		super(Role.class, entityStoreManager, taskManager, smartTypeManager);
 	}
 
 }

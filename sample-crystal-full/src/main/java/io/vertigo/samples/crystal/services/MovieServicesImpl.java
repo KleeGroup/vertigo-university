@@ -9,15 +9,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.dynamo.collections.model.FacetedQueryResult;
-import io.vertigo.dynamo.collections.model.SelectedFacetValues;
-import io.vertigo.dynamo.domain.model.DtList;
-import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.dynamo.search.SearchManager;
-import io.vertigo.dynamo.search.model.SearchQueryBuilder;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.VUserException;
-import io.vertigo.lang.WrappedException;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.VUserException;
+import io.vertigo.core.lang.WrappedException;
+import io.vertigo.datafactory.collections.model.FacetedQueryResult;
+import io.vertigo.datafactory.collections.model.SelectedFacetValues;
+import io.vertigo.datafactory.search.SearchManager;
+import io.vertigo.datafactory.search.model.SearchQueryBuilder;
+import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.datamodel.structure.model.DtListState;
 import io.vertigo.samples.SamplesPAO;
 import io.vertigo.samples.crystal.CrystalPAO;
 import io.vertigo.samples.crystal.dao.ActorDAO;
@@ -50,14 +50,14 @@ public class MovieServicesImpl implements MovieServices {
 
 	@Override
 	public Movie getMovieById(final Long movId) {
-		Assertion.checkNotNull(movId);
+		Assertion.check().isNotNull(movId);
 		//---
 		return movieDAO.get(movId);
 	}
 
 	@Override
 	public List<Long> getActorsIdsByMovie(final Long movId) {
-		Assertion.checkNotNull(movId);
+		Assertion.check().isNotNull(movId);
 		//---
 		return samplesPAO.getActorsIdsByMovie(movId);
 	}
@@ -91,7 +91,7 @@ public class MovieServicesImpl implements MovieServices {
 
 	@Override
 	public DtList<Movie> getMoviesInCountries(final List<Long> countryIds) {
-		Assertion.checkNotNull(countryIds);
+		Assertion.check().isNotNull(countryIds);
 		//---
 		return movieDAO.getMoviesInCountries(countryIds);
 	}
@@ -133,7 +133,7 @@ public class MovieServicesImpl implements MovieServices {
 
 	@Override
 	public DtList<Role> getRolesByMovie(final Long movId) {
-		Assertion.checkNotNull(movId);
+		Assertion.check().isNotNull(movId);
 		// ---
 		final Movie movie = movieDAO.get(movId);
 		// two instructions with accessor , the fluent style is broken to avoid transparent loads within loops
@@ -143,7 +143,7 @@ public class MovieServicesImpl implements MovieServices {
 
 	@Override
 	public long countMaleActorsInMovie(final Long movId) {
-		Assertion.checkNotNull(movId);
+		Assertion.check().isNotNull(movId);
 		//---
 		final DtList<Actor> actors = actorDAO.getActorsByMovie(movId);
 

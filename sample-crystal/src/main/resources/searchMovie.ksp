@@ -5,22 +5,6 @@ package io.vertigo.samples.crystal.domain
 /***** Index Movie  *****/
 /************************/
 
-create DtDefinition DtMovieIndex {
-  field movId {domain: DoId label: "id" required:"true" }
-  field name {domain: DoLabelLong label: "Titre" required:"false"}
-  field year {domain: DoYear label: "Année" required:"false"}
-  field country {domain: DoLabel label: "Pays" required:"false"}
-  
-  computed nameSortOnly {domain : DoLabelLongSort, label:"Titre"
-        expression:"return getName();"
-  }  
-}
-
-
-/************************/
-/***** Index Movie  *****/
-/************************/
-
 create IndexDefinition IdxMovie {  
   keyConcept : DtMovie
   dtIndex : DtMovieIndex
@@ -59,7 +43,7 @@ create FacetedQueryDefinition QryMovie {
   keyConcept : DtMovie
   facets : []
   domainCriteria : DoLabel
-  listFilterBuilderClass : "io.vertigo.dynamox.search.DslListFilterBuilder"  
+  listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
   listFilterBuilderQuery : "_all:#+query*#"
 }
 
@@ -67,7 +51,7 @@ create FacetedQueryDefinition QryMovieWithFacets {
   keyConcept : DtMovie
   facets : [FctMovieName, FctMovieYear, FctMovieCountry]
   domainCriteria : DoLabel
-  listFilterBuilderClass : "io.vertigo.dynamox.search.DslListFilterBuilder"  
+  listFilterBuilderClass : "io.vertigo.datafactory.impl.search.dsl.DslListFilterBuilder"  
   listFilterBuilderQuery : "_all:#+query*#"
 }
 

@@ -2,14 +2,14 @@ package io.vertigo.samples.reprise;
 
 import javax.inject.Inject;
 
-import io.vertigo.app.Home;
-import io.vertigo.dynamo.task.TaskManager;
-import io.vertigo.dynamo.task.metamodel.TaskDefinition;
-import io.vertigo.dynamo.task.model.Task;
-import io.vertigo.dynamo.task.model.TaskBuilder;
-import io.vertigo.dynamo.store.StoreServices;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.node.Node;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.task.TaskManager;
+import io.vertigo.datamodel.task.definitions.TaskDefinition;
+import io.vertigo.datamodel.task.model.Task;
+import io.vertigo.datamodel.task.model.TaskBuilder;
+import io.vertigo.datastore.impl.dao.StoreServices;
 
 /**
  * This class is automatically generated.
@@ -25,7 +25,7 @@ public final class ReprisePAO implements StoreServices {
 	 */
 	@Inject
 	public ReprisePAO(final TaskManager taskManager) {
-		Assertion.checkNotNull(taskManager);
+		Assertion.check().isNotNull(taskManager);
 		//-----
 		this.taskManager = taskManager;
 	}
@@ -36,7 +36,7 @@ public final class ReprisePAO implements StoreServices {
 	 * @return the builder 
 	 */
 	private static TaskBuilder createTaskBuilder(final String name) {
-		final TaskDefinition taskDefinition = Home.getApp().getDefinitionSpace().resolve(name, TaskDefinition.class);
+		final TaskDefinition taskDefinition = Node.getNode().getDefinitionSpace().resolve(name, TaskDefinition.class);
 		return Task.builder(taskDefinition);
 	}
 
@@ -44,6 +44,11 @@ public final class ReprisePAO implements StoreServices {
 	 * Execute la tache TkCountActors.
 	 * @return Long count
 	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkCountActors",
+			request = "select count(*) from ACTOR",
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
 	public Long countActors() {
 		final Task task = createTaskBuilder("TkCountActors")
 				.build();
@@ -56,6 +61,12 @@ public final class ReprisePAO implements StoreServices {
 	 * Execute la tache TkCountMovies.
 	 * @return Long count
 	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkCountMovies",
+			request = "select count(*) from MOVIE" + 
+ "        	where NAME like 'S%%'",
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
 	public Long countMovies() {
 		final Task task = createTaskBuilder("TkCountMovies")
 				.build();
@@ -68,6 +79,13 @@ public final class ReprisePAO implements StoreServices {
 	 * Execute la tache TkCountRoles.
 	 * @return Long count
 	*/
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkCountRoles",
+			request = "select count(*) from ROLE rol" + 
+ "        	join movie mov on mov.MOV_ID = rol.MOV_ID" + 
+ "        	where mov.name like 'S%%'",
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyId")
 	public Long countRoles() {
 		final Task task = createTaskBuilder("TkCountRoles")
 				.build();

@@ -1,11 +1,11 @@
 package io.vertigo.samples.crystal.domain;
 
-import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.EnumVAccessor;
-import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
+import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -18,7 +18,7 @@ public final class Actor implements Entity {
 	private Long actId;
 	private String name;
 
-	@io.vertigo.dynamo.domain.stereotype.Association(
+	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "AActSex",
 			fkFieldName = "sexCd",
 			primaryDtDefinitionName = "DtSexe",
@@ -31,7 +31,7 @@ public final class Actor implements Entity {
 			foreignRole = "Actor",
 			foreignLabel = "Actor",
 			foreignMultiplicity = "0..*")
-	private final EnumVAccessor<io.vertigo.samples.crystal.domain.Sexe, io.vertigo.samples.crystal.domain.SexeEnum> sexCdAccessor = new EnumVAccessor<>(io.vertigo.samples.crystal.domain.Sexe.class, "Sexe", io.vertigo.samples.crystal.domain.SexeEnum.class);
+	private final EnumStoreVAccessor<io.vertigo.samples.crystal.domain.Sexe, io.vertigo.samples.crystal.domain.SexeEnum> sexCdAccessor = new EnumStoreVAccessor<>(io.vertigo.samples.crystal.domain.Sexe.class, "Sexe", io.vertigo.samples.crystal.domain.SexeEnum.class);
 
 	/** {@inheritDoc} */
 	@Override
@@ -44,7 +44,7 @@ public final class Actor implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long actId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(smartType = "STyId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getActId() {
 		return actId;
 	}
@@ -63,7 +63,7 @@ public final class Actor implements Entity {
 	 * Récupère la valeur de la propriété 'Nom'.
 	 * @return String name <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoLabelLong", required = true, label = "Nom")
+	@Field(smartType = "STyLabelLong", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Nom")
 	public String getName() {
 		return name;
 	}
@@ -82,7 +82,7 @@ public final class Actor implements Entity {
 	 * Récupère la valeur de la propriété 'Sexe'.
 	 * @return String sexCd
 	 */
-	@Field(domain = "DoCode", type = "FOREIGN_KEY", label = "Sexe")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyCode", label = "Sexe", fkDefinition = "DtSexe" )
 	public String getSexCd() {
 		return (String) sexCdAccessor.getId();
 	}
@@ -100,7 +100,7 @@ public final class Actor implements Entity {
 	 * Association : Sexe.
 	 * @return l'accesseur vers la propriété 'Sexe'
 	 */
-	public EnumVAccessor<io.vertigo.samples.crystal.domain.Sexe, io.vertigo.samples.crystal.domain.SexeEnum> sexe() {
+	public EnumStoreVAccessor<io.vertigo.samples.crystal.domain.Sexe, io.vertigo.samples.crystal.domain.SexeEnum> sexe() {
 		return sexCdAccessor;
 	}
 	

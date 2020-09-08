@@ -2,14 +2,14 @@ package io.vertigo.samples.crystal;
 
 import javax.inject.Inject;
 
-import io.vertigo.app.Home;
-import io.vertigo.dynamo.task.TaskManager;
-import io.vertigo.dynamo.task.metamodel.TaskDefinition;
-import io.vertigo.dynamo.task.model.Task;
-import io.vertigo.dynamo.task.model.TaskBuilder;
-import io.vertigo.dynamo.store.StoreServices;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.node.Node;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.task.TaskManager;
+import io.vertigo.datamodel.task.definitions.TaskDefinition;
+import io.vertigo.datamodel.task.model.Task;
+import io.vertigo.datamodel.task.model.TaskBuilder;
+import io.vertigo.datastore.impl.dao.StoreServices;
 
 /**
  * This class is automatically generated.
@@ -25,7 +25,7 @@ public final class CrystalPAO implements StoreServices {
 	 */
 	@Inject
 	public CrystalPAO(final TaskManager taskManager) {
-		Assertion.checkNotNull(taskManager);
+		Assertion.check().isNotNull(taskManager);
 		//-----
 		this.taskManager = taskManager;
 	}
@@ -36,16 +36,24 @@ public final class CrystalPAO implements StoreServices {
 	 * @return the builder 
 	 */
 	private static TaskBuilder createTaskBuilder(final String name) {
-		final TaskDefinition taskDefinition = Home.getApp().getDefinitionSpace().resolve(name, TaskDefinition.class);
+		final TaskDefinition taskDefinition = Node.getNode().getDefinitionSpace().resolve(name, TaskDefinition.class);
 		return Task.builder(taskDefinition);
 	}
 
 	/**
 	 * Execute la tache TkLoadMovieIndex.
-	 * @param movieIds List de Long 
+	 * @param movieIds List de Long
 	 * @return DtList de MovieIndex dtcIndex
 	*/
-	public io.vertigo.dynamo.domain.model.DtList<io.vertigo.samples.crystal.domain.MovieIndex> loadMovieIndex(final java.util.List<Long> movieIds) {
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkLoadMovieIndex",
+			request = "select MOV_ID, mov.NAME, YEAR, cou.NAME as COUNTRY" + 
+ "				from MOVIE mov" + 
+ "				join COUNTRY cou on cou.cou_id = mov.cou_id" + 
+ "				where MOV_ID in (#movieIds.rownum#);",
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtMovieIndex")
+	public io.vertigo.datamodel.structure.model.DtList<io.vertigo.samples.crystal.domain.MovieIndex> loadMovieIndex(@io.vertigo.datamodel.task.proxy.TaskInput(name = "movieIds", smartType = "STyId") final java.util.List<Long> movieIds) {
 		final Task task = createTaskBuilder("TkLoadMovieIndex")
 				.addValue("movieIds", movieIds)
 				.build();

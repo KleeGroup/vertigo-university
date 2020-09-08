@@ -2,12 +2,13 @@ package io.vertigo.samples.crystal.dao;
 
 import javax.inject.Inject;
 
-import io.vertigo.dynamo.impl.store.util.DAO;
-import io.vertigo.dynamo.store.StoreManager;
-import io.vertigo.dynamo.store.StoreServices;
-import io.vertigo.dynamo.task.TaskManager;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
+import io.vertigo.datastore.impl.dao.DAO;
+import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.datamodel.smarttype.SmartTypeManager;
+import io.vertigo.datamodel.task.TaskManager;
 import io.vertigo.samples.crystal.domain.Country;
-import io.vertigo.lang.Generated;
 
 /**
  * This class is automatically generated.
@@ -18,12 +19,13 @@ public final class CountryDAO extends DAO<Country, java.lang.Long> implements St
 
 	/**
 	 * Contructeur.
-	 * @param storeManager Manager de persistance
+	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
+	 * @param smartTypeManager SmartTypeManager
 	 */
 	@Inject
-	public CountryDAO(final StoreManager storeManager, final TaskManager taskManager) {
-		super(Country.class, storeManager, taskManager);
+	public CountryDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final SmartTypeManager smartTypeManager) {
+		super(Country.class, entityStoreManager, taskManager, smartTypeManager);
 	}
 
 }

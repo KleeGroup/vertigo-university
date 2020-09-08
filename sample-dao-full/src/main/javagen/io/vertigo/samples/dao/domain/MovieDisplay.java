@@ -1,9 +1,9 @@
 package io.vertigo.samples.dao.domain;
 
-import io.vertigo.dynamo.domain.model.DtObject;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.DtObject;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -23,7 +23,7 @@ public final class MovieDisplay implements DtObject {
 	 * Récupère la valeur de la propriété 'Titre'.
 	 * @return String name <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoLabelLong", required = true, label = "Titre")
+	@Field(smartType = "STyLabelLong", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Titre")
 	public String getName() {
 		return name;
 	}
@@ -42,7 +42,7 @@ public final class MovieDisplay implements DtObject {
 	 * Récupère la valeur de la propriété 'Année'.
 	 * @return Integer year
 	 */
-	@Field(domain = "DoYear", label = "Année")
+	@Field(smartType = "STyYear", label = "Année")
 	public Integer getYear() {
 		return year;
 	}
@@ -61,7 +61,7 @@ public final class MovieDisplay implements DtObject {
 	 * Récupère la valeur de la propriété 'Pays'.
 	 * @return String country
 	 */
-	@Field(domain = "DoLabel", label = "Pays")
+	@Field(smartType = "STyLabel", label = "Pays")
 	public String getCountry() {
 		return country;
 	}
@@ -80,7 +80,7 @@ public final class MovieDisplay implements DtObject {
 	 * Récupère la valeur de la propriété 'Nombre d'acteur'.
 	 * @return Long actorsCount
 	 */
-	@Field(domain = "DoId", label = "Nombre d'acteur")
+	@Field(smartType = "STyId", label = "Nombre d'acteur")
 	public Long getActorsCount() {
 		return actorsCount;
 	}

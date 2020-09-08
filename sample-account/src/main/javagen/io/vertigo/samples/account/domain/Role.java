@@ -1,11 +1,11 @@
 package io.vertigo.samples.account.domain;
 
-import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -18,7 +18,7 @@ public final class Role implements Entity {
 	private Long rolId;
 	private String asCharacter;
 
-	@io.vertigo.dynamo.domain.stereotype.Association(
+	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "ARolMov",
 			fkFieldName = "movId",
 			primaryDtDefinitionName = "DtMovie",
@@ -31,22 +31,22 @@ public final class Role implements Entity {
 			foreignRole = "Role",
 			foreignLabel = "Role",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.vertigo.samples.account.domain.Movie> movIdAccessor = new VAccessor<>(io.vertigo.samples.account.domain.Movie.class, "Movie");
+	private final StoreVAccessor<io.vertigo.samples.account.domain.Movie> movIdAccessor = new StoreVAccessor<>(io.vertigo.samples.account.domain.Movie.class, "Movie");
 
-	@io.vertigo.dynamo.domain.stereotype.Association(
+	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "ARolAct",
 			fkFieldName = "actId",
 			primaryDtDefinitionName = "DtActor",
 			primaryIsNavigable = true,
 			primaryRole = "Actor",
 			primaryLabel = "Actor",
-			primaryMultiplicity = "0..1",
+			primaryMultiplicity = "1..1",
 			foreignDtDefinitionName = "DtRole",
 			foreignIsNavigable = false,
 			foreignRole = "Role",
 			foreignLabel = "Role",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.vertigo.samples.account.domain.Actor> actIdAccessor = new VAccessor<>(io.vertigo.samples.account.domain.Actor.class, "Actor");
+	private final StoreVAccessor<io.vertigo.samples.account.domain.Actor> actIdAccessor = new StoreVAccessor<>(io.vertigo.samples.account.domain.Actor.class, "Actor");
 
 	/** {@inheritDoc} */
 	@Override
@@ -59,7 +59,7 @@ public final class Role implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long rolId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(smartType = "STyId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getRolId() {
 		return rolId;
 	}
@@ -78,7 +78,7 @@ public final class Role implements Entity {
 	 * Récupère la valeur de la propriété 'Dans le role de'.
 	 * @return String asCharacter <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoLabelVeryLong", required = true, label = "Dans le role de")
+	@Field(smartType = "STyLabelVeryLong", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Dans le role de")
 	public String getAsCharacter() {
 		return asCharacter;
 	}
@@ -97,7 +97,7 @@ public final class Role implements Entity {
 	 * Récupère la valeur de la propriété 'Movie'.
 	 * @return Long movId
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Movie")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Movie", fkDefinition = "DtMovie" )
 	public Long getMovId() {
 		return (Long) movIdAccessor.getId();
 	}
@@ -114,9 +114,9 @@ public final class Role implements Entity {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Actor'.
-	 * @return Long actId
+	 * @return Long actId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Actor")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Actor", fkDefinition = "DtActor" )
 	public Long getActId() {
 		return (Long) actIdAccessor.getId();
 	}
@@ -124,7 +124,7 @@ public final class Role implements Entity {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Définit la valeur de la propriété 'Actor'.
-	 * @param actId Long
+	 * @param actId Long <b>Obligatoire</b>
 	 */
 	public void setActId(final Long actId) {
 		actIdAccessor.setId(actId);
@@ -134,7 +134,7 @@ public final class Role implements Entity {
 	 * Association : Actor.
 	 * @return l'accesseur vers la propriété 'Actor'
 	 */
-	public VAccessor<io.vertigo.samples.account.domain.Actor> actor() {
+	public StoreVAccessor<io.vertigo.samples.account.domain.Actor> actor() {
 		return actIdAccessor;
 	}
 
@@ -142,7 +142,7 @@ public final class Role implements Entity {
 	 * Association : Movie.
 	 * @return l'accesseur vers la propriété 'Movie'
 	 */
-	public VAccessor<io.vertigo.samples.account.domain.Movie> movie() {
+	public StoreVAccessor<io.vertigo.samples.account.domain.Movie> movie() {
 		return movIdAccessor;
 	}
 	

@@ -1,10 +1,10 @@
 package io.vertigo.samples.account.domain;
 
-import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -28,7 +28,7 @@ public final class Sexe implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return String sexCd <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoCode", type = "ID", required = true, label = "Id")
+	@Field(smartType = "STyCode", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public String getSexCd() {
 		return sexCd;
 	}
@@ -47,7 +47,7 @@ public final class Sexe implements Entity {
 	 * Récupère la valeur de la propriété 'Label'.
 	 * @return String label <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoLabelLong", required = true, label = "Label")
+	@Field(smartType = "STyLabelLong", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Label")
 	public String getLabel() {
 		return label;
 	}

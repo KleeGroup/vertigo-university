@@ -1,11 +1,11 @@
 package io.vertigo.samples.account.domain;
 
-import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -20,35 +20,35 @@ public final class User implements Entity {
 	private String name;
 	private String email;
 
-	@io.vertigo.dynamo.domain.stereotype.Association(
+	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "AUsrCou",
 			fkFieldName = "couId",
 			primaryDtDefinitionName = "DtCountry",
 			primaryIsNavigable = true,
 			primaryRole = "Country",
 			primaryLabel = "Country",
-			primaryMultiplicity = "0..1",
+			primaryMultiplicity = "1..1",
 			foreignDtDefinitionName = "DtUser",
 			foreignIsNavigable = false,
 			foreignRole = "User",
 			foreignLabel = "User",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.vertigo.samples.account.domain.Country> couIdAccessor = new VAccessor<>(io.vertigo.samples.account.domain.Country.class, "Country");
+	private final StoreVAccessor<io.vertigo.samples.account.domain.Country> couIdAccessor = new StoreVAccessor<>(io.vertigo.samples.account.domain.Country.class, "Country");
 
-	@io.vertigo.dynamo.domain.stereotype.Association(
+	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "AUsrGrp",
 			fkFieldName = "grpId",
 			primaryDtDefinitionName = "DtUserGroup",
 			primaryIsNavigable = true,
 			primaryRole = "Group",
 			primaryLabel = "Group",
-			primaryMultiplicity = "0..1",
+			primaryMultiplicity = "1..1",
 			foreignDtDefinitionName = "DtUser",
 			foreignIsNavigable = false,
 			foreignRole = "User",
 			foreignLabel = "User",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<io.vertigo.samples.account.domain.UserGroup> grpIdAccessor = new VAccessor<>(io.vertigo.samples.account.domain.UserGroup.class, "Group");
+	private final StoreVAccessor<io.vertigo.samples.account.domain.UserGroup> grpIdAccessor = new StoreVAccessor<>(io.vertigo.samples.account.domain.UserGroup.class, "Group");
 
 	/** {@inheritDoc} */
 	@Override
@@ -61,7 +61,7 @@ public final class User implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long usrId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(smartType = "STyId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getUsrId() {
 		return usrId;
 	}
@@ -80,7 +80,7 @@ public final class User implements Entity {
 	 * Récupère la valeur de la propriété 'Login'.
 	 * @return String login
 	 */
-	@Field(domain = "DoLabel", label = "Login")
+	@Field(smartType = "STyLabel", label = "Login")
 	public String getLogin() {
 		return login;
 	}
@@ -99,7 +99,7 @@ public final class User implements Entity {
 	 * Récupère la valeur de la propriété 'Nom'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", label = "Nom")
+	@Field(smartType = "STyLabel", label = "Nom")
 	public String getName() {
 		return name;
 	}
@@ -118,7 +118,7 @@ public final class User implements Entity {
 	 * Récupère la valeur de la propriété 'email'.
 	 * @return String email
 	 */
-	@Field(domain = "DoLabel", label = "email")
+	@Field(smartType = "STyLabel", label = "email")
 	public String getEmail() {
 		return email;
 	}
@@ -135,9 +135,9 @@ public final class User implements Entity {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Country'.
-	 * @return Long couId
+	 * @return Long couId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Country")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Country", fkDefinition = "DtCountry" )
 	public Long getCouId() {
 		return (Long) couIdAccessor.getId();
 	}
@@ -145,7 +145,7 @@ public final class User implements Entity {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Définit la valeur de la propriété 'Country'.
-	 * @param couId Long
+	 * @param couId Long <b>Obligatoire</b>
 	 */
 	public void setCouId(final Long couId) {
 		couIdAccessor.setId(couId);
@@ -154,9 +154,9 @@ public final class User implements Entity {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Group'.
-	 * @return Long grpId
+	 * @return Long grpId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", label = "Group")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Group", fkDefinition = "DtUserGroup" )
 	public Long getGrpId() {
 		return (Long) grpIdAccessor.getId();
 	}
@@ -164,7 +164,7 @@ public final class User implements Entity {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Définit la valeur de la propriété 'Group'.
-	 * @param grpId Long
+	 * @param grpId Long <b>Obligatoire</b>
 	 */
 	public void setGrpId(final Long grpId) {
 		grpIdAccessor.setId(grpId);
@@ -174,7 +174,7 @@ public final class User implements Entity {
 	 * Association : Country.
 	 * @return l'accesseur vers la propriété 'Country'
 	 */
-	public VAccessor<io.vertigo.samples.account.domain.Country> country() {
+	public StoreVAccessor<io.vertigo.samples.account.domain.Country> country() {
 		return couIdAccessor;
 	}
 
@@ -182,7 +182,7 @@ public final class User implements Entity {
 	 * Association : Group.
 	 * @return l'accesseur vers la propriété 'Group'
 	 */
-	public VAccessor<io.vertigo.samples.account.domain.UserGroup> group() {
+	public StoreVAccessor<io.vertigo.samples.account.domain.UserGroup> group() {
 		return grpIdAccessor;
 	}
 	
